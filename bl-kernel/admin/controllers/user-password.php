@@ -15,8 +15,14 @@
 // ============================================================================
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	// Prevent non-administrators to change other users
+	$username = $_POST['username'];
+	if ($login->role()!=='admin') {
+	    $username = $login->username();
+	}
+
 	if (changeUserPassword(array(
-		'username'=>$_POST['username'],
+		'username'=>$username,
 		'newPassword'=>$_POST['newPassword'],
 		'confirmPassword'=>$_POST['confirmPassword']
 	))) {
